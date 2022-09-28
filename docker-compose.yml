@@ -1,0 +1,28 @@
+version: '3.6'
+services:
+  elasticsearch:
+    image: elasticsearch:8.4.1
+    container_name: elasticsearch_autocomplete
+    volumes:
+      - ./elasticsearch:/usr/share/elasticsearch/data
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+
+#  web_server:
+#    build:
+#      context: .
+#      dockerfile: ./python_image/Dockerfile
+#    command: python /backend/main.py
+#    container_name: tig_web_app
+#    depends_on:
+#      - mongodb
+#    links:
+#      - mongodb
+#    volumes:
+#      - ./web_app:/backend
+#    ports:
+#      - '127.0.0.1:8080:8080'
+#      - '127.0.0.1:8125:8125/udp'
