@@ -1,13 +1,10 @@
 from elasticsearch import Elasticsearch
-from datetime import datetime
 
 
-def main():
-    es = Elasticsearch("http://localhost:9200")
-
-    resp = es.search(
+def find(elastic, query):
+    resp = elastic.search(
         index="test-index",
-        query={"match": {"text": {'query': "au"}}}
+        query={"match": {"text": {'query': query}}}
     )
     print(f"Got {resp['hits']['total']['value']} Hits:")
     for hit in resp['hits']['hits']:
@@ -15,4 +12,11 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    es = Elasticsearch("http://localhost:9200")
+
+    while True:
+        try:
+            query_word = input('Please input search word: ')
+            find(elastic=es, query=query_word)
+        except KeyboardInterrupt:
+            break
